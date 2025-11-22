@@ -19,4 +19,37 @@
     font-weight: bold;
 }
 
+    /* Home Section */
+#home{
+    background-color: rgb(251, 203, 211);
+}
+
+.home-content{
+    max-width: 50%;
+}
+.home-content h3{
+    color: #dc4f77;
+}
+.home-content .btn{
+    background-color: #d41f68;
+    border: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.404);
+}
+.home-content .btn:hover{
+    background-color: var(--bs-body-color);
+}
+.img{
+    max-height: 500px !important;
+}
+/* Responsive Design */
+@media (max-width: 767px) {
+    .home-content{
+        max-width: 100%;
+        text-align: center;
+    }
+    .img{
+        margin-top: 20px;
+        max-height: 300px !important;
+    }
+}
 
