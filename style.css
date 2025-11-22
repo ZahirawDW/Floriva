@@ -1,0 +1,22 @@
+:root{
+    --bs-body-color:#5d0c23;
+}
+
+/* Navbar */
+.navbar{
+    background-color: #ffeef1;
+}
+.navbar-brand{
+    color: var(--bs-body-color);
+    font-family: 'Courier New', Courier, monospace;
+
+}
+.nav-link{
+    color: black;
+}
+.nav-link:hover{
+    color: #d41f68;
+    font-weight: bold;
+}
+
+
