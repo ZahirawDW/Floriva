@@ -1,5 +1,6 @@
 :root{
     --bs-body-color:#5d0c23;
+    --light-pink: #d41f68;
 }
 
 /* Navbar */
@@ -15,11 +16,18 @@
     color: black;
 }
 .nav-link:hover{
-    color: #d41f68;
+    color: var(--light-pink);
     font-weight: bold;
 }
 
-    /* Home Section */
+
+/* Titles style */
+#about h2,#reviews h2,#products h2{
+    color: var(--bs-body-color);
+    font-family: 'Courier New', Courier, monospace;  
+}
+
+/* Home Section */
 #home{
     background-color: rgb(251, 203, 211);
 }
@@ -31,8 +39,9 @@
     color: #dc4f77;
 }
 .home-content .btn{
-    background-color: #d41f68;
+    background-color: var(--light-pink);
     border: none;
+    border-radius: 15px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.404);
 }
 .home-content .btn:hover{
@@ -40,6 +49,55 @@
 }
 .img{
     max-height: 500px !important;
+}
+
+/* Products section */
+/* Navigation buttons */
+.btns .btn{
+    border: 1px solid var(--bs-body-color);
+    box-shadow: 2px 2px 8px #750d2b;
+    border-radius: 30px;
+}
+.btns .btn:hover{
+    background-color: #750d2b;
+    color: white;
+}
+.btns .btn.active{
+    background-color: var(--bs-body-color);
+    color: white;
+}
+#products .card{
+    border: none;
+    box-shadow: 2px 2px 10px rgba(36, 36, 36, 0.404);
+    border-radius: 20px;
+}
+#products .card:hover{
+    box-shadow: 2px 2px 10px 10px #d3156161;
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+#products .card img{
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    height: 300px;
+}
+#products .card .card-body .card-text{
+    font-size: 0.9em;
+    margin-bottom: 0.9em;
+}
+.product-price{
+    color: var(--light-pink);
+    margin-bottom: 0.9em;
+}
+#products .card .card-body .btn{
+    border:2px solid var(--light-pink);
+    color: var(--light-pink);
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.404);
+}
+#products .card .card-body .btn:hover{
+    background-color: var(--light-pink);
+    color: white;
 }
 
 /* About section */
@@ -65,11 +123,7 @@
     object-fit: cover;
     border-radius: 20px;
 }
-/* the content style */
-#about h2,#reviews h2{
-    color: var(--bs-body-color);
-    font-family: 'Courier New', Courier, monospace;  
-}
+/* the about content style */
 .about-para{
     max-width: 50%;
 }
@@ -86,7 +140,7 @@
     box-shadow: 2px 2px 10px rgba(36, 36, 36, 0.404);
 }
 
-    /* Responsive Design */
+/* Responsive Design */
 @media (max-width: 767px) {
     .home-content{
         max-width: 100%;
