@@ -18,12 +18,26 @@
                <span class="navbar-toggler-icon"></span>
             </button>
             <!-- brand logo -->
-            <a class="navbar-brand fs-2 fw-bold me-auto ms-1" href="#"><img src="images/logo.png" alt="" style="max-height: 50px;max-width: 60px;">Floriva</a>
+            <a class="navbar-brand fs-2 fw-bold me-auto ms-1" href="#"><img src="images/logo.png" alt="Floriva logo">Floriva</a>
+
             <!-- Icons -->
-            <div class="d-flex gap-md-4 order-lg-3">
-                <div><i class="bi bi-heart-fill fs-4"></i></div>
-                <div class="ms-2 me-md-2"><i class="bi bi-cart-fill fs-4"></i></div>
+            <div class="d-flex gap-md-4 order-lg-3 icons">
+                <!-- wishlist -->
+                <div>
+                    <button type="button" class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#wishlistModal">
+                        <i class="bi bi-heart-fill fs-4"></i>
+                        <span class="badge rounded-pill text-bg-danger" id="wishlistCount">0</span>
+                    </button>
+                </div>
+                <!-- cart -->
+                <div class="ms-2 me-md-1">
+                    <button type="button" class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <i class="bi bi-cart-fill fs-4"></i>
+                        <span class="badge rounded-pill text-bg-danger" id="cartCount">0</span>
+                    </button>
+                </div>
             </div>
+
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
@@ -36,6 +50,43 @@
             </div>
         </div>
     </nav>
+
+    <!-- Modals -->
+    <!-- wishlist Modal -->
+    <div class="modal fade" id="wishlistModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="wishlistModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="wishlistModalLabel">Wishlist</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body wishlist-modal-body">
+            <!-- Wishlist items will be dynamically inserted here -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary wishlist-clean" data-clean="modal">Clean</button>
+        </div>
+        </div>
+    </div>
+    </div>
+        <!-- cart Modal -->
+    <div class="modal fade" id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="cartModalLabel">Shopping Cart</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body cart-modal-body">
+            <!-- Cart items will be dynamically inserted here -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary shop-clean" data-clean="modal">Clean</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
     <!-- Content -->
     <main>
         <!-- Home Section -->
@@ -69,7 +120,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- About section -->
         <section id="about">
             <h2 class="fw-bold text-center fw-bold fs-1 mt-5 mb-4">About Us</h2>

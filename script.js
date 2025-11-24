@@ -68,7 +68,7 @@ const Products = [
         id:9,
         category: 'arrangements',
         name: 'Luxury Bloom Box',
-        image: 'images/arrangement1.jpg',
+        image: 'images/arrangement4.jpg',
         description:'A premium round box filled with elegant roses. Perfect for special moments.',
         price: '$60.00',
     },{
@@ -82,14 +82,14 @@ const Products = [
         id:11,
         category: 'arrangements',
         name: 'Pink Velvet Flower Box',
-        image: 'images/arrangement3.jpg',
+        image: 'images/arrangement1.jpg',
         description:'Velvet-style box filled with pink roses for a luxurious feel.',
         price: '$58.00',
     },{
         id:12,
         category: 'arrangements',
         name: 'White Elegance Round Box',
-        image: 'images/arrangement4.jpg',
+        image: 'images/arrangement6.jpg',
         description:'Pure white roses arranged in a minimalist floral box.',
         price: '$33.75',
     },{
@@ -103,7 +103,7 @@ const Products = [
         id:14,
         category: 'arrangements',
         name: 'Petal Harmony Floral Box',
-        image: 'images/arrangement6.jpg',
+        image: 'images/arrangement3.jpg',
         description:'A soft harmony of pastel flowers arranged with care.',
         price: '$42.50',
     },{
@@ -131,28 +131,28 @@ const Products = [
         id:18,
         category: 'gift-sets',
         name: 'Bloom & Teddy Combo',
-        image: 'images/giftset2.jpg',
+        image: 'images/giftset3.jpg',
         description:'Cute teddy bear with fresh roses. Perfect for expressing care.',
         price: '$50.00',
     },{
         id:19,
         category: 'gift-sets',
         name: 'Rose & Chocolate Deluxe Set',
-        image: 'images/giftset3.jpg',
+        image: 'images/giftset2.jpg',
         description:'Elegant roses combined with premium chocolate. Romantic and warm.',
         price: '$60.00',
     },{
         id:20,
         category: 'gift-sets',
         name: 'Pastel Flowers + Bear Box',
-        image: 'images/giftset4.jpg',
+        image: 'images/giftset5.jpg',
         description:'Pastel roses arranged with a mini teddy. Soft and adorable.',
         price: '$45.00',
     },{
         id:21,
         category: 'gift-sets',
         name: 'Warm Hugs Floral Gift',
-        image: 'images/giftset5.jpg',
+        image: 'images/giftset4.jpg',
         description:'Cozy floral arrangement paired with a small gift for comfort.',
         price: '$52.00',
     },{
@@ -191,8 +191,8 @@ function createProductCard(product) {
             <h5 class="card-title">${product.name}</h5>
             <p class="card-text lead text-secondary">${product.description}</p>
             <p class="product-price fw-bold">Starting from: ${product.price}</p>
-            <a href="#" class="btn">Add to Cart</a>
-            <a href="#" class="btn">Add to Wishlist</a>
+            <a href="#" class="btn" data-id="${product.id}" id="addToCart">Add to Cart</a>
+            <a href="#" class="btn" data-id="${product.id}" id="addToWishlist">Add to Wishlist</a>
         </div>
     `;  
     return card;
@@ -241,5 +241,125 @@ giftSetsBtn.addEventListener('click', () => {
     filterProductsByCategory('gift-sets');
 });
 
+
 // Initial display of all products
 filterProductsByCategory('all');
+
+// Add the products to the modals functionality
+const wishlistItems = [];
+const cartItems = [];
+
+// Show items in modals functionality
+const wishlistModalBody = document.querySelector('.wishlist-modal-body');
+const cartModalBody = document.querySelector('.cart-modal-body');
+
+
+function updateWishlistModal(){
+    wishlistModalBody.innerHTML = '';
+    wishlistItems.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item d-flex mb-3 rounded-pill p-2';
+        itemDiv.innerHTML = `
+            <img src='${item.image}' alt='${item.name}' class='mx-3'>
+            <div>
+            <h5>${item.name}</h5>
+            <div class='d-flex justify-content-around align-items-center'>
+                <p class="fw-bold me-auto price">Price: ${item.price}</p>
+                <p class='category'>${item.category}</p>
+            </div>
+            </div>    
+        `;
+        wishlistModalBody.appendChild(itemDiv);
+    });
+}
+function updateCartModal(){
+    cartModalBody.innerHTML = '';
+    cartItems.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item d-flex mb-3 rounded-pill p-2';
+        itemDiv.innerHTML = `
+            <img src='${item.image}' alt='${item.name}' class='mx-3'>
+            <div>
+            <h5>${item.name}</h5>
+            <div class='d-flex justify-content-around align-items-center'>
+                <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
+                <p class='category'>${item.category}</p>
+            </div>
+            </div>    
+        `;
+        cartModalBody.appendChild(itemDiv);
+    });
+}
+
+document.getElementById('productsContainer').addEventListener('click', (e) => {
+    if(e.target.classList.contains('btn')) {  
+        e.preventDefault();
+        const button = e.target;
+        const itemId = parseInt(button.getAttribute('data-id'));
+        const product = Products.find(p => p.id === itemId);
+
+        if (button.textContent === 'Add to Wishlist') {
+            wishlistItems.push(product);
+            updateWishlistModal();
+        } else if (button.textContent === 'Add to Cart') {
+            cartItems.push(product);
+            updateCartModal();
+        } 
+        updateBadgeCounts();
+        saveToStorage();
+    }
+});
+
+
+
+// Function to update badge counts
+function updateBadgeCounts() {
+    document.getElementById('wishlistCount').textContent = wishlistItems.length;
+    document.getElementById('cartCount').textContent = cartItems.length;
+}
+
+// Modal clean button functionality
+function cleanModalContent(){
+} 
+function cleanwishlistContent(){
+    wishlistModalBody.innerHTML = '';
+    wishlistItems.length = 0;
+    saveToStorage();
+    document.getElementById('wishlistCount').textContent = 0;
+}
+function cleancartContent(){
+    cartModalBody.innerHTML = '';
+    cartItems.length = 0;
+    saveToStorage();
+    document.getElementById('cartCount').textContent = 0;
+}
+
+document.querySelector('.wishlist-clean').addEventListener('click', ()=>{
+    cleanwishlistContent();
+});
+document.querySelector('.shop-clean').addEventListener('click', ()=>{
+    cleancartContent();
+});
+
+
+// SAVE function
+function saveToStorage() {
+    localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+}
+
+// LOAD function  
+function loadFromStorage() {
+    const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Push all saved items into the arrays
+    wishlistItems.push(...savedWishlist);
+    cartItems.push(...savedCart);
+}
+
+// CALL load when page loads
+loadFromStorage();
+updateWishlistModal();
+updateCartModal();
+updateBadgeCounts();
