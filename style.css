@@ -182,6 +182,14 @@ button[type="submit"]:hover{
     background-color: var(--bs-body-color);
 }
 
+/* Footer */
+footer{
+    background-color: #ffeef1;
+}
+footer a{
+    color: var(--bs-body-color);
+}
+
 
 /* Responsive Design */
 @media (max-width: 330px) {

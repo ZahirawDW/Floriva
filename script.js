@@ -528,3 +528,6 @@ function initValidation() {
     });
 }
 initValidation();
+
+// year update in footer
+document.querySelector('.year').textContent = new Date().getFullYear();
