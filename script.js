@@ -344,8 +344,13 @@ document.querySelector('.shop-clean').addEventListener('click', ()=>{
 
 // SAVE function
 function saveToStorage() {
-    localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+    try{
+        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
     localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+    catch(error){
+        console.error('Error saving to localStorage:', error);
+    }
 }
 
 // LOAD function  

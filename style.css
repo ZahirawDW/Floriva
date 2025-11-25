@@ -10,7 +10,6 @@
 .navbar-brand{
     color: var(--bs-body-color);
     font-family: 'Courier New', Courier, monospace;
-
 }
 .navbar-brand img{
     max-height: 50px;
@@ -78,8 +77,8 @@
 .home-content .btn:hover{
     background-color: var(--bs-body-color);
 }
-.img{
-    max-height: 500px !important;
+#home .img{
+    max-height: 500px;
 }
 
 /* Products section */
@@ -141,15 +140,15 @@
 }
 
 .carousel-item {
-    height: 100% !important;
+    height: 100%;
 }
 
 .carousel-inner {
-    height: 100% !important;
+    height: 100%;
 }
 
 #carouselImages .carousel-item img {
-    height: 100% !important;
+    height: 100%;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;

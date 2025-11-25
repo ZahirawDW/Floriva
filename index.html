@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Floriva - Fresh flower bouquets, arrangements & gift sets. Same-day delivery.">
+    <meta property="og:title" content="Floriva - Beautiful Flowers for Every Occasion">
     <link rel="icon" href="images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -13,12 +15,12 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm sticky-top">
         <div class="container-lg">
-            <!-- Hamburger button -->
+            <!-- Mobile menu toggle -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
             </button>
             <!-- brand logo -->
-            <a class="navbar-brand fs-2 fw-bold me-auto ms-1" href="#"><img src="images/logo.png" alt="Floriva logo">Floriva</a>
+            <a class="navbar-brand fs-2 fw-bold me-auto ms-1" href="#"><img src="images/logo.png" alt="Floriva logo"><span>Floriva</span></a>
 
             <!-- Icons -->
             <div class="d-flex gap-md-4 order-lg-3 icons">
@@ -41,7 +43,7 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-2"><a class="nav-link" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" aria-current="page" href="#home">Home</a></li>
                     <li class="nav-item mx-2"><a class="nav-link" href="#products">Products</a></li>
                     <li class="nav-item mx-2"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item mx-2"><a class="nav-link" href="#reviews">Reviews</a></li>
@@ -99,14 +101,14 @@
                     <a class="btn btn-lg text-white" role="button" href="#products">Shop Now</a>
                 </div>
                 <div>            
-                    <img src="images/home.png" alt="bear holding flowers" class="img">
+                    <img src="images/home.png" alt="Cute teddy bear holding flower bouquet" class="img">
                 </div>
             </div>
         </section>
 
         <!-- Products section -->
         <section id="products">
-            <h2 class="fw-bold text-center fw-bold fs-1 mt-5 mb-4">Our Products</h2>
+            <h2 class="fw-bold text-center fs-1 mt-5 mb-4">Our Products</h2>
             <!-- Navigation buttons -->
             <div class="d-flex justify-content-center overflow-auto flex-wrap btns">
                 <button class="btn m-2 px-3 py-2 allBtn" data-category="all">All</button>
@@ -123,7 +125,7 @@
 
         <!-- About section -->
         <section id="about">
-            <h2 class="fw-bold text-center fw-bold fs-1 mt-5 mb-4">About Us</h2>
+            <h2 class="fw-bold text-center fs-1 mt-5 mb-4">About Us</h2>
             <div class="container-lg mb-5 d-flex justify-content-around flex-column flex-md-row">
                 <div class="images mt-2">
                     <div id="carouselImages" class="carousel slide carousel-fade"  data-bs-ride="carousel">
@@ -138,10 +140,10 @@
                             <img src="images/aboutimg3.jpg" class="d-block w-100 img-fluid" alt="bouquet of flowers">
                         </div>
                         <div class="carousel-item">
-                            <img src="images/aboutimg4.jpg" class="d-block w-100 img-fluid" alt="Our floriva skilled florist">
+                            <img src="images/aboutimg4.jpg" class="d-block w-100 img-fluid" alt="Our Floriva skilled florist at work">
                         </div>
                         <div class="carousel-item">
-                            <img src="images/aboutimg5.jpg" class="d-block w-100 img-fluid" alt="Our floriva skilled florist">
+                            <img src="images/aboutimg5.jpg" class="d-block w-100 img-fluid" alt="Our Floriva skilled florist at work">
                         </div>
                         <div class="carousel-item">
                             <img src="images/aboutimg6.jpg" class="d-block w-100 img-fluid" alt="pink flowers bouquet">
@@ -177,7 +179,7 @@
 
         <!-- Reviews -->
         <section id="reviews" class="mt-5">
-            <h2 class="fw-bold text-center fw-bold fs-1 mt-5 mb-4">Customer Reviews</h2>
+            <h2 class="fw-bold text-center fs-1 mt-5 mb-4">Customer Reviews</h2>
             <div class="container-lg mb-5">
                 <div id="carouselReviews" class="carousel slide p-5 mx-auto d-flex align-items-center" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -212,12 +214,12 @@
 
         <!-- Contact Us -->
         <section id="contact">
-            <h2 class="fw-bold text-center fw-bold fs-1 mt-5 mb-4">Contact Us</h2>
+            <h2 class="fw-bold text-center fs-1 mt-5 mb-4">Contact Us</h2>
             <div class="container-md mb-5">
                 <p class="lead text-center">Want to order? Fill out the form below</p>
                 <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <form class="mb-3">
+                    <form class="mb-3" novalidate>
                         <!-- input Name -->
                         <label for="name" class="form-label">Full Name</label>
                         <input type="text" id="name" class="form-control" placeholder="James Willsom" required>
@@ -227,7 +229,7 @@
                         <input type="email" id="email" class="form-control " placeholder="e.g james@example.com" required>
                             
                         <!-- address -->
-                        <label for="location" class="mb-2 mt-4">Your address (location)</label>
+                        <label for="location" class="mb-2 mt-4">Delivery Address (location)</label>
                         <input type="text" id="location" class="form-control" placeholder="your location" required>
                         
                         <div class="d-flex flex-wrap justify-content-center gap-3 mb-2 mt-4">
@@ -253,17 +255,17 @@
 
                             <!-- the Price -->
                             <div>
-                                <label for="price" class="mb-2">Price ($)</label>
+                                <label for="price" class="mb-2">Total Price ($)</label>
                                 <input type="text" id="price" class="form-control" placeholder="0.00" readonly>
                             </div>
                         </div>
                        
                         
                         <!-- textarea for questions -->
-                        <label for="textarea" class="mb-2 mt-4">You have a question ?</label>
+                        <label for="textarea" class="mb-2 mt-4">Any special requests or questions?</label>
                         <textarea class="form-control" id="textarea" style="height: 140px;"></textarea>
 
-                        <!-- Submition -->
+                        <!-- Submission -->
                         <button type="submit" class="btn text-white d-block mx-auto mt-5">Submit Order</button>
                         <!-- Toast for the submit validation -->
                         <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -295,7 +297,7 @@
                 <div class="row justify-content-around"> 
                     <div class="col-lg-4 mb-4">
                         <h5><img src="images/logo.png" alt="Floriva logo" style="width: 50px; height: 50px;">  Floriva</h5> 
-                        <p>Bringing beauty to life's special moments with handcrafted floral arrangements. Fresh flowers, delivered with care and artistry for every celebration.</p> 
+                        <p>Bringing beauty to life's special moments with handcrafted floral arrangements. Fresh flowers, delivered with care and artistry, for every celebration.</p> 
                     </div> 
                     <div class="col-lg-2 col-md-4 mb-4 text-md-center"> 
                         <h6>Quick Links</h6> 
