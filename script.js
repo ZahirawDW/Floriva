@@ -363,3 +363,168 @@ loadFromStorage();
 updateWishlistModal();
 updateCartModal();
 updateBadgeCounts();
+
+// CONTACT SECTION
+// Validation rules for contact form fields  
+const validationRules = {
+    name: {
+        regex: /^[A-Za-z\s]{2,40}$/,
+        event: 'input',
+        message: 'Full Name must be between 2-40 letters only and no numbers'
+    },
+    email: {
+        regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        event: 'input',
+        message: 'Please enter a valid email address'
+    },
+    location: {
+        regex: /^[A-Za-z\s,.]{2,80}$/,
+        event: 'input', 
+        message: 'Please enter a valid location'
+    },
+    date: {
+        regex: /^\d{4}-\d{2}-\d{2}$/,
+        event: 'input',
+        message: 'Please enter a valid date'
+    },
+    productSelect: {
+        regex: /.+/, // at least one character
+        event: 'change',
+        message: 'Please select a product'
+    }
+}
+
+// find the field(input) and get it rules and make test on it 
+function validate(fieldId, value) {
+    if (!validationRules[fieldId]) {
+        return true;
+    }
+    const rule = validationRules[fieldId];
+    return rule.regex.test(value);
+}
+
+// show message error 
+function showError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    field.style.border = '2px solid #ff0000ff';
+    
+    // Create or update error message
+    let errorElement = document.getElementById(fieldId + '-error');
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.id = fieldId + '-error';
+        errorElement.style.color = 'red';
+        field.parentNode.insertBefore(errorElement, field.nextSibling);
+    }
+    errorElement.textContent = message;
+}
+
+// hide the error message
+function hideError(fieldId) {
+    const field = document.getElementById(fieldId);
+    field.style.border = '';
+
+    const errorElement = document.getElementById(fieldId + '-error');
+    if (errorElement) {
+        errorElement.remove();
+    }    
+}
+
+// Connect validation to fields
+function setupFieldValidation(fieldId) {
+    const field = document.getElementById(fieldId);
+    const rule = validationRules[fieldId];
+    
+    field.addEventListener(rule.event, function() {
+        const isValid = validate(fieldId, this.value);
+        
+        if (isValid) {
+            hideError(fieldId);
+        } else {
+            showError(fieldId, rule.message);
+        }
+    });
+}
+
+// Validate entire form on submit
+function validateForm() {
+    let isValid = true;
+    
+    Object.keys(validationRules).forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!validate(fieldId, field.value)) {
+            showError(fieldId, validationRules[fieldId].message);
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+// Date picker minimum date setup
+const dateField = document.getElementById('date');
+const today = new Date();
+const yyyy = today.getFullYear();
+let mm = today.getMonth() + 1;
+let dd = today.getDate();
+if (mm < 10) mm = '0' + mm;
+if (dd < 10) dd = '0' + dd;
+const minDate = `${yyyy}-${mm}-${dd}`;
+dateField.setAttribute('min', minDate);
+
+// product select 
+const productSelect = document.getElementById('productSelect');
+Products.forEach(product => {
+    const option = document.createElement('option');
+    option.value = product.id;
+    option.textContent = product.name;
+    productSelect.appendChild(option);
+});
+
+// the Price display based on selection
+const priceDisplay = document.getElementById('price');
+
+productSelect.addEventListener('change', function() {
+    const selectedProduct = Products.find(product => product.id.toString() === this.value);
+    const quantityDisplay = document.getElementById('quantity').value;
+    console.log(quantityDisplay);
+    
+    
+    if (selectedProduct) {
+        priceDisplay.value = selectedProduct.price.replace('$', '') * quantityDisplay;
+    } else {
+        priceDisplay.value = '0.00';
+    }
+});
+
+// quantity change event to update price
+document.getElementById('quantity').addEventListener('input', function() {
+    const selectedProduct = Products.find(product => product.id.toString() === productSelect.value);
+    const quantity = parseInt(this.value) || 1;
+    
+    if (selectedProduct) {
+        const priceNumber = parseFloat(selectedProduct.price.replace('$', ''));
+        const total = priceNumber * quantity;
+        priceDisplay.value = `$${total.toFixed(2)}`;
+    }
+});
+// Initialize
+function initValidation() {
+    // Setup validation for each field in our rules
+    Object.keys(validationRules).forEach(fieldId => {
+        setupFieldValidation(fieldId);
+    });
+    
+    // form submit handler
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (validateForm()) {
+            // Show Bootstrap toast
+            const toastElement = document.getElementById('liveToast');
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            this.reset();
+        }
+    });
+}
+initValidation();
