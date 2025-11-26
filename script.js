@@ -256,6 +256,15 @@ const cartModalBody = document.querySelector('.cart-modal-body');
 
 function updateWishlistModal(){
     wishlistModalBody.innerHTML = '';
+    if (wishlistItems.length === 0) {
+        wishlistModalBody.innerHTML = `
+            <div class="text-center py-4">
+                <i class="bi bi-heart fs-1 text-muted"></i>
+                <p class="mt-2">Your wishlist is empty</p>
+            </div>
+        `;
+        return;
+    }
     wishlistItems.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item d-flex mb-3 rounded-pill p-2';
@@ -274,22 +283,40 @@ function updateWishlistModal(){
 }
 function updateCartModal(){
     cartModalBody.innerHTML = '';
+    if (cartItems.length === 0) {
+        cartModalBody.innerHTML = `
+            <div class="text-center py-4">
+                <i class="bi bi-cart-x fs-1 text-muted"></i>
+                <p class="mt-2">Your cart is empty</p>
+            </div>
+        `;
+        return;
+    }
     cartItems.forEach(item => {
         const itemDiv = document.createElement('div');
-        itemDiv.className = 'item d-flex mb-3 rounded-pill p-2';
+        itemDiv.className = 'item d-flex justify-content-center justify-content-md-between align-items-center mb-3 rounded-pill p-2';
         itemDiv.innerHTML = `
-            <img src='${item.image}' alt='${item.name}' class='mx-3'>
+            <img src='${item.image}' alt='${item.name}' class='ms-sm-3'>
             <div>
-            <h5>${item.name}</h5>
-            <div class='d-flex justify-content-around align-items-center'>
-                <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
-                <p class='category'>${item.category}</p>
-            </div>
+                <h5>${item.name}</h5>
+                <div class='d-flex justify-content-around align-items-center'>
+                    <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
+                    <p class='category'>${item.category}</p>
+                </div>
             </div>    
+            <div class='qnt mt-4'>
+                <i class="bi bi-chevron-left fs-2 decrease-qty" data-id="${item.id}"></i>
+                <span class='quantity badge bg-secondary'>${item.quantity || 1}</span>
+                <i class="bi bi-chevron-right fs-2 increase-qty" data-id="${item.id}"></i>
+            </div>
         `;
         cartModalBody.appendChild(itemDiv);
     });
+
+    // Call to calculate the price and Qte 
+    updateCartPreview();
 }
+
 
 document.getElementById('productsContainer').addEventListener('click', (e) => {
     if(e.target.classList.contains('btn')) {  
@@ -298,40 +325,100 @@ document.getElementById('productsContainer').addEventListener('click', (e) => {
         const itemId = parseInt(button.getAttribute('data-id'));
         const product = Products.find(p => p.id === itemId);
 
+        if (!product) return; 
         if (button.textContent === 'Add to Wishlist') {
-            wishlistItems.push(product);
-            updateWishlistModal();
+             const existingItemIndex = wishlistItems.findIndex(item => item.id === product.id);
+            if (existingItemIndex === -1) {
+                wishlistItems.push({...product});
+                updateWishlistModal();
+            } else {
+                // Show message that item is already in wishlist
+                alert('This item is already in your wishlist!');
+            }
         } else if (button.textContent === 'Add to Cart') {
-            cartItems.push(product);
+            const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
+            if (existingItemIndex === -1) {
+                cartItems.push({...product, quantity: 1});
+            } else {
+                cartItems[existingItemIndex].quantity += 1;
+            }
             updateCartModal();
+            updateCartPreview();
         } 
         updateBadgeCounts();
         saveToStorage();
     }
 });
 
-
+document.addEventListener('click', function(e) {
+    // Only handle clicks inside cart modal
+    if (!e.target.closest('.cart-modal-body')) return;
+    
+    const itemId = parseInt(e.target.dataset.id);
+    
+    if (e.target.classList.contains('increase-qty')) {
+        const item = cartItems.find(item => item.id === itemId);
+        if (item) {
+            item.quantity = (item.quantity || 1) + 1;
+            updateCartModal();
+            updateBadgeCounts();
+            updateCartPreview(); 
+            saveToStorage();
+        }
+    }
+    
+    if (e.target.classList.contains('decrease-qty')) {
+        const item = cartItems.find(item => item.id === itemId);
+        if (item) {
+            item.quantity -= 1;
+        }
+        // If quantity reaches 0, remove the item
+        if (item.quantity === 0) {
+            const itemIndex = cartItems.findIndex(i => i.id === itemId);
+            cartItems.splice(itemIndex, 1);
+        }
+            updateCartModal();
+            updateBadgeCounts();
+            updateCartPreview(); 
+            saveToStorage();
+    }
+});
 
 // Function to update badge counts
 function updateBadgeCounts() {
     document.getElementById('wishlistCount').textContent = wishlistItems.length;
-    document.getElementById('cartCount').textContent = cartItems.length;
+     // Calculate total quantity in cart
+    const totalCartQuantity = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    document.getElementById('cartCount').textContent = totalCartQuantity;
 }
 
 // Modal clean button functionality
 function cleanModalContent(){
 } 
 function cleanwishlistContent(){
-    wishlistModalBody.innerHTML = '';
+    wishlistModalBody.innerHTML = `
+        <div class="text-center py-4">
+            <i class="bi bi-heart fs-1 text-muted"></i>
+            <p class="mt-2">Your wishlist is empty</p>
+        </div>
+    `;
     wishlistItems.length = 0;
     saveToStorage();
     document.getElementById('wishlistCount').textContent = 0;
 }
 function cleancartContent(){
-    cartModalBody.innerHTML = '';
+    cartModalBody.innerHTML = `
+        <div class="text-center py-4">
+            <i class="bi bi-cart-x fs-1 text-muted"></i>
+            <p class="mt-2">Your cart is empty</p>
+        </div>
+    `;
     cartItems.length = 0;
     saveToStorage();
     document.getElementById('cartCount').textContent = 0;
+    
+    // Call to calculate the price and Qte 
+    updateCartPreview();
 }
 
 document.querySelector('.wishlist-clean').addEventListener('click', ()=>{
@@ -361,6 +448,9 @@ function loadFromStorage() {
     // Push all saved items into the arrays
     wishlistItems.push(...savedWishlist);
     cartItems.push(...savedCart);
+
+    // Call to calculate the price and Qte 
+    updateCartPreview();
 }
 
 // CALL load when page loads
@@ -391,11 +481,6 @@ const validationRules = {
         regex: /^\d{4}-\d{2}-\d{2}$/,
         event: 'input',
         message: 'Please enter a valid date'
-    },
-    productSelect: {
-        regex: /.+/, // at least one character
-        event: 'change',
-        message: 'Please select a product'
     }
 }
 
@@ -455,6 +540,12 @@ function setupFieldValidation(fieldId) {
 function validateForm() {
     let isValid = true;
     
+     // Check if cart is empty
+    if (cartItems.length === 0) {
+        alert('Please add items to your cart before submitting the order.');
+        isValid = false;
+        return isValid; 
+    }
     Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (!validate(fieldId, field.value)) {
@@ -477,42 +568,29 @@ if (dd < 10) dd = '0' + dd;
 const minDate = `${yyyy}-${mm}-${dd}`;
 dateField.setAttribute('min', minDate);
 
-// product select 
-const productSelect = document.getElementById('productSelect');
-Products.forEach(product => {
-    const option = document.createElement('option');
-    option.value = product.id;
-    option.textContent = product.name;
-    productSelect.appendChild(option);
-});
-
-// the Price display based on selection
-const priceDisplay = document.getElementById('price');
-
-productSelect.addEventListener('change', function() {
-    const selectedProduct = Products.find(product => product.id.toString() === this.value);
-    const quantityDisplay = document.getElementById('quantity').value;
-    console.log(quantityDisplay);
+// Calculate the quantity and price
+function updateCartPreview() {
+    const totalOrderQuantity = document.getElementById('totalOrderQuantity');
+    const totalOrderPrice = document.getElementById('totalOrderPrice');
     
-    
-    if (selectedProduct) {
-        priceDisplay.value = selectedProduct.price.replace('$', '') * quantityDisplay;
-    } else {
-        priceDisplay.value = '0.00';
+    if (cartItems.length === 0) {
+        totalOrderQuantity.textContent = '0 items';
+        totalOrderPrice.textContent = '$0.00';
+        return;
     }
-});
-
-// quantity change event to update price
-document.getElementById('quantity').addEventListener('input', function() {
-    const selectedProduct = Products.find(product => product.id.toString() === productSelect.value);
-    const quantity = parseInt(this.value) || 1;
     
-    if (selectedProduct) {
-        const priceNumber = parseFloat(selectedProduct.price.replace('$', ''));
-        const total = priceNumber * quantity;
-        priceDisplay.value = `$${total.toFixed(2)}`;
-    }
-});
+    // Calculate total quantity
+    const totalQuantity = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    totalOrderQuantity.textContent = `${totalQuantity} ${totalQuantity === 1 ? 'item' : 'items'}`;
+    
+    // Calculate total price
+    const totalPrice = cartItems.reduce((total, item) => {
+        const price = parseFloat(item.price.replace('$', ''));
+        return total + (price * (item.quantity || 1));
+    }, 0);
+    totalOrderPrice.textContent = `$${totalPrice.toFixed(2)}`;
+}
+
 // Initialize
 function initValidation() {
     // Setup validation for each field in our rules

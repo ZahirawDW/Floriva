@@ -232,34 +232,34 @@
                         <label for="location" class="mb-2 mt-4">Delivery Address (location)</label>
                         <input type="text" id="location" class="form-control" placeholder="your location" required>
                         
-                        <div class="d-flex flex-wrap justify-content-center gap-3 mb-2 mt-4">
-                            <!-- Product Selection -->
-                            <div>
-                                <label for="productSelect" class="mb-2">Select Product</label>
-                                <select id="productSelect" class="form-select" required>
-                                    <option value="" disabled selected>Select a product</option>
-                                </select>
+                            <!-- Cart Summary -->
+                            <div class="card mt-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Order Summary</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Total Quantity -->
+                                    <div class="px-3">
+                                        <strong>Quantity: </strong>
+                                        <strong id="totalOrderQuantity">0 items</strong>
+                                    </div>
+                                    <!-- Total Price Display -->
+                                    <div class="my-3 px-3">
+                                        <strong>Total Amount: </strong>
+                                        <strong id="totalOrderPrice">$0.00</strong>
+                                    </div>
+                                    <!-- Show Cart Button -->
+                                    <button type="button" class="btn btn-outline-pink w-100 bg-light rounded" data-bs-toggle="modal" data-bs-target="#cartModal">
+                                        <i class="bi bi-cart-fill me-2"></i>View & Edit Cart
+                                    </button>
+                                </div>
                             </div>
-
-                             <!-- Delivery Date -->
-                            <div>
-                                <label for="date" class="mb-2">Preferred Delivery Date</label>
-                                <input type="date" id="date" class="form-control" required>
-                            </div>
-
-                            <!-- Item Quantity -->
-                            <div>
-                                <label for="quantity" class="mb-2">Quantity</label>
-                                <input type="number" id="quantity" class="form-control" min="1" value="1" required>
-                            </div>
-
-                            <!-- the Price -->
-                            <div>
-                                <label for="price" class="mb-2">Total Price ($)</label>
-                                <input type="text" id="price" class="form-control" placeholder="0.00" readonly>
-                            </div>
-                        </div>
-                       
+                            
+                            <!-- Delivery Date -->
+                           <div>
+                               <label for="date" class="mb-2">Preferred Delivery Date</label>
+                               <input type="date" id="date" class="form-control" required>
+                           </div>
                         
                         <!-- textarea for questions -->
                         <label for="textarea" class="mb-2 mt-4">Any special requests or questions?</label>
