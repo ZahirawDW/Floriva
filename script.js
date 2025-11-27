@@ -299,7 +299,7 @@ function updateCartModal(){
             <div class='d-flex justify-content-center g-2'>
                 <img src='${item.image}' alt='${item.name}' class='ms-sm-3 me-2 ps-1 align-self-center'>
                 <div>
-                    <h5>${item.name}</h5>
+                    <h5 class='pt-2'>${item.name}</h5>
                     <div class='d-flex justify-content-around align-items-center'>
                         <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
                         <p class='category'>${item.category}</p>
