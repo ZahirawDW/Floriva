@@ -294,9 +294,9 @@ function updateCartModal(){
     }
     cartItems.forEach(item => {
         const itemDiv = document.createElement('div');
-        itemDiv.className = 'item d-flex justify-content-center justify-content-md-between align-items-center mb-3 rounded-pill p-2';
+        itemDiv.className = 'item d-flex justify-content-center justify-content-md-between align-items-center mb-3 py-2 rounded-pill p-2';
         itemDiv.innerHTML = `
-            <img src='${item.image}' alt='${item.name}' class='ms-sm-3'>
+            <img src='${item.image}' alt='${item.name}' class='ms-sm-3 me-2 ps-1'>
             <div>
                 <h5>${item.name}</h5>
                 <div class='d-flex justify-content-around align-items-center'>
