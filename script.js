@@ -296,12 +296,14 @@ function updateCartModal(){
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item d-flex justify-content-center justify-content-md-between align-items-center mb-3 py-2 rounded-pill p-2';
         itemDiv.innerHTML = `
-            <img src='${item.image}' alt='${item.name}' class='ms-sm-3 me-2 ps-1'>
-            <div>
-                <h5>${item.name}</h5>
-                <div class='d-flex justify-content-around align-items-center'>
-                    <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
-                    <p class='category'>${item.category}</p>
+            <div class='d-flex justify-content-center g-2'>
+                <img src='${item.image}' alt='${item.name}' class='ms-sm-3 me-2 ps-1 align-self-center'>
+                <div>
+                    <h5>${item.name}</h5>
+                    <div class='d-flex justify-content-around align-items-center'>
+                        <p class="fw-bold me-md-auto price">Price: ${item.price}</p>
+                        <p class='category'>${item.category}</p>
+                    </div>
                 </div>
             </div>    
             <div class='qnt mt-4'>
