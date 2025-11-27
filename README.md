@@ -6,7 +6,7 @@
 
 **A modern, responsive flower shop website built with pure frontend technologies**
 
-[Live Demo](https://floriva-shop.netlify.app) • [Report Bug](https://github.com/ZahirawDW/floriva/issues) • [Request Feature](https://github.com/ZahirawDW/floriva/issues)
+[Live Demo](https://floriva-shop.netlify.app/) • [Report Bug](https://github.com/ZahirawDW/floriva/issues) • [Request Feature](https://github.com/ZahirawDW/floriva/issues)
 
 </div>
 

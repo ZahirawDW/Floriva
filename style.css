@@ -239,7 +239,7 @@ footer a{
         max-height: 100%;
     }
     .modal-body .item{
-        max-height: 100px !important;
+        max-height: 120px !important;
     }
     .modal-body h5{
         font-size: 0.8em !important;
